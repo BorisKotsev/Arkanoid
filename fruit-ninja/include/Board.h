@@ -36,8 +36,14 @@ private:
 
 	int m_speed = 2;
 	int m_frameId = 0;
-
+	int m_combo;
+	int m_comboDuration;
+	int m_opacity;
 	int m_timeBeforeNextWave = 0;
+	int m_opacityTmp;
+	
+	Uint32 m_comboStart;
+
 	SDL_Texture* m_background;
 
 	Drawable m_trail;
@@ -45,6 +51,8 @@ private:
 	vector<Drawable> m_trails;
 
 	Drawable m_scoreUI;
+	DrawableWithOpacity m_comboUI;
+	DrawableWithOpacity m_comboText;
 	
 	Drawable m_fruitScore;
 

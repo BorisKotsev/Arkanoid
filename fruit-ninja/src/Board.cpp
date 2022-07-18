@@ -18,7 +18,7 @@ void Board::load(int bombRarity)
 {
 	fstream stream;
 
-	string tmp, background, trail, fruitImg;
+	string tmp, background, trail, fruitImg, comboImg;
 
 	stream.open(CONFIG_FOLDER + GAME_FOLDER + "board.txt");
 
@@ -27,6 +27,10 @@ void Board::load(int bombRarity)
 	stream >> tmp >> trail;
 	stream >> tmp >> m_fruitScore.rect.x >> m_fruitScore.rect.y >> m_fruitScore.rect.w >> m_fruitScore.rect.h;
 	stream >> tmp >> fruitImg;
+	stream >> tmp >> m_comboText.rect.x >> m_comboText.rect.y >> m_comboText.rect.w >> m_comboText.rect.h;
+	stream >> tmp >> comboImg;
+	stream >> tmp >> m_comboDuration;
+	stream >> tmp >> m_opacity;
 
 	stream.close();
 	
@@ -36,12 +40,21 @@ void Board::load(int bombRarity)
 	
 	m_fruitScore.texture = loadTexture(GAME_FOLDER + fruitImg);
 	
+	m_comboText.texture = loadTexture(GAME_FOLDER + comboImg);
+	
 	loadHearts();
 	
 	m_score = 0;
 	
 	m_bombRarity = bombRarity;
 	m_timeBeforeNextWave = 0;
+	
+	m_combo = 1;
+
+	m_comboUI.opacity = m_opacity;
+	m_comboText.opacity = m_opacity;
+
+	m_opacityTmp = m_opacity;
 }
 
 void Board::loadHearts()
@@ -136,6 +149,27 @@ void Board::drawFruits()
 	{
 		m_trails.clear();
 	}
+	
+	if (m_combo != 1)
+	{
+		m_opacityTmp--;
+		
+		m_comboUI.opacity = m_opacityTmp;
+		m_comboText.opacity = m_opacityTmp;
+		
+		auto score = getText(to_string(m_combo), FONT::ASSASIN, COLOR::LIGHT, 72);
+		m_comboUI.texture = score.second;
+
+		m_comboUI.rect = { 390, 266, score.first.x, score.first.y };
+
+		drawObject(m_comboUI);
+
+		drawObject(m_comboText);
+	}
+	else
+	{
+		m_opacityTmp = m_opacity;
+	}
 }
 
 void Board::drawHearts()
@@ -148,6 +182,7 @@ void Board::drawHearts()
 
 void Board::updateFruits()
 {
+	bool sliced = false;
 	for (int i = 0; i < m_fruits.size(); i++)
 	{
 		m_fruits.at(i).update();
@@ -166,6 +201,7 @@ void Board::updateFruits()
 		{
 			if (m_fruits.at(i).m_isBomb && isMouseInRect(m_fruits[i].getHitBox()))
 			{
+				m_combo = 1;
 				if (m_lives > 1)
 				{
 					removeHeart();
@@ -180,14 +216,33 @@ void Board::updateFruits()
 
 			if (isMouseInRect(m_fruits[i].getHitBox()))
 			{
+				sliced = true;
+				
 				m_fruits.at(i).cut();	
+				
 				if (!m_fruits[i].m_isBomb)
 				{
+					if (SDL_GetTicks() - m_comboStart <= m_comboDuration)
+					{
+						m_combo ++;
+					}
+					else
+					{
+						m_combo = 1;
+
+						m_comboStart = SDL_GetTicks();
+					}
+					
+					m_score += m_combo;
+					
 					world.m_soundManager.playSound(SOUND::SLICE_MUSIC);				
-					m_score++;
 				}
 			}
 		}
+	}
+	if (!sliced && SDL_GetTicks() - m_comboStart > m_comboDuration)
+	{
+		m_combo = 1;
 	}
 }
 
