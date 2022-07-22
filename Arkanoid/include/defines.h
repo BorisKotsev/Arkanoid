@@ -29,11 +29,8 @@ using namespace std;
 
 static string UI_FOLDER = "UI\\";
 static string MENU_FOLDER = "menu\\";
-static string FRUITS_FOLDER = "fruits\\";
-static string SPLASHES_FOLDER = "splashes\\";
 static string IMG_FOLDER = "img\\";
 static string CONFIG_FOLDER = "config\\";
-static string FONT_FOLDER = "ttf\\";
 static string CONFIG_MANAGER_FOLDER = "configManager\\";
 static string SOUND_FOLDER = "music\\";
 static string TITLE_SCREEN_FOLDER = "titleScreen\\";
@@ -194,15 +191,6 @@ struct float2
     }
 };
 
-enum class HITBOX
-{
-    NONE = 0,
-    RECT = 1,
-    TRIANGLE = 2,
-    CIRCLE = 3,
-    OVAL = 4
-};
-
 enum class FONT
 {
     NONE = 0,
@@ -227,12 +215,6 @@ struct DrawableForMenu : public Drawable
     SDL_Texture* glowTexture = nullptr;
 };
 
-struct Rotatable
-{
-    int angle = 0;
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-};
-
 struct DrawableWithOpacity : public Drawable
 {
     int opacity = 0;
@@ -242,7 +224,5 @@ struct DrawableWithOpacity : public Drawable
 enum class SOUND
 {
     NONE = 0,
-    BACKGROUND = 1,
-    SLICE_MUSIC = 2,
-    BOMB_EXPLOSION = 3
+    BACKGROUND = 1
 };

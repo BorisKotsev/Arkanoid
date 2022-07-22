@@ -21,7 +21,5 @@ private:
 	
 	Button m_exitBtn;
 
-	Drawable m_scoreUI;
-
 	DrawableForMenu m_playAgain;
 };

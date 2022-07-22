@@ -4,7 +4,6 @@
 
 #include <SDL_TTF.h>
 
-#include "Writer.h"
 #include "Engine.h"
 
 using namespace std;
@@ -25,8 +24,6 @@ public:
 	static unsigned int m_SCREEN_WIDTH;
 	static unsigned int m_SCREEN_HEIGHT;
 
-	Writer m_writer;
-
 	void init();
 	void update();
 	void draw();
@@ -36,10 +33,6 @@ public:
 	static void drawObject(SDL_Texture* texture);
 	static void drawObject(Drawable& drawable);
 	static void drawObject(DrawableWithOpacity& drawable);
-
-	static void drawObjectRotated(SDL_Texture* texture, Rotatable rotate);
-	static void drawObjectRotated(Drawable& drawable, Rotatable rotate);
-	static void drawObjectRotated(DrawableWithOpacity& drawable, Rotatable rotate);
 	
 private:
 	int2 screenCenter;
@@ -53,11 +46,6 @@ namespace
 	void drawObject(T& t)
 	{
 		Presenter::drawObject(t);
-	}
-	template <typename T>
-	void drawObjectRotated(T& t, Rotatable rotate)
-	{
-		Presenter::drawObjectRotated(t, rotate);
 	}
 
 	SDL_Texture* loadTexture(string path)

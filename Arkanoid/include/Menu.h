@@ -19,9 +19,7 @@ public:
 private: 
 	SDL_Texture* m_menuTexture;
 
-	DrawableForMenu m_easy;
-	DrawableForMenu m_medium;
-	DrawableForMenu m_hard;
+	DrawableForMenu m_playBtn;
 
 	Button m_exitBtn;
 };

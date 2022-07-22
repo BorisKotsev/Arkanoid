@@ -42,13 +42,6 @@ void WinScreen::run()
 
 	m_exitBtn.update();
 	m_exitBtn.draw();
-
-	auto score = getText(to_string(world.m_stateManager.m_game->m_board.m_score), FONT::ASSASIN, COLOR::LIGHT, 72);
-	m_scoreUI.texture = score.second;
-
-	m_scoreUI.rect = { 510, 115, score.first.x, score.first.y };
-
-	drawObject(m_scoreUI);
 	
 	if (isMouseInRect(m_playAgain.rect))
 	{
@@ -56,9 +49,6 @@ void WinScreen::run()
 
 		if (mouseIsPressed())
 		{			
-			world.m_stateManager.m_game->m_board.m_hearts.clear();			
-			world.m_stateManager.m_game->m_board.m_fruits.clear();			
-			
 			world.m_stateManager.changeGameState(GAME_STATE::MENU);
 
 			return;

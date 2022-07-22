@@ -10,7 +10,7 @@ Game::~Game()
 
 void Game::init()
 {
-	m_board.load(3);
+	m_board.load();
 }
 
 void Game::destroy()

@@ -17,6 +17,4 @@ public:
 	
 private:
 	Mix_Chunk* m_backgroundMusic;
-	Mix_Chunk* m_sliceSound;
-	Mix_Chunk* m_bombExplosionSound;
 };

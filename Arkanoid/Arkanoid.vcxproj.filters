@@ -60,15 +60,6 @@
     <ClCompile Include="src\Board.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fruit.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Writer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FruitSlice.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\World.h">
@@ -114,15 +105,6 @@
       <Filter>include\STATES</Filter>
     </ClInclude>
     <ClInclude Include="include\Board.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Fruit.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Writer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\FruitSlice.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
