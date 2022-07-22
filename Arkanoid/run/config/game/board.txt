@@ -1,17 +1,1 @@
 BackgroundImg: background.bmp
-
-TrailW&H: 50 50
-
-TrailImg: trail.bmp
-
-FruitRect: 20 20 120 120
-
-FruitUI: passionFruitUI.bmp
-
-ComboText: 20 266 358 68
-
-ComboImg: Combo.bmp
-
-ComboDuration: 2000
-
-Opacity: 10

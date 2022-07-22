@@ -1,7 +1,0 @@
-fruitsInWave: 1 4
-bombsInWave: 2
-timeBetweenWaves: 100 100
-timeBetweenFruits: 1 3
-speedX: -15 30
-speedY: 30 15
-splashTime: 300
