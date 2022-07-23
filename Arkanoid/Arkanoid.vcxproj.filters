@@ -60,6 +60,9 @@
     <ClCompile Include="src\Board.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Brick.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\World.h">
@@ -105,6 +108,9 @@
       <Filter>include\STATES</Filter>
     </ClInclude>
     <ClInclude Include="include\Board.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Brick.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

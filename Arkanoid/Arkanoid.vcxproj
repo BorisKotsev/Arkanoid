@@ -208,6 +208,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Board.cpp" />
+    <ClCompile Include="src\Brick.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\ConfigManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -225,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Board.h" />
+    <ClInclude Include="include\Brick.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\ConfigManager.h" />
     <ClInclude Include="include\defines.h" />

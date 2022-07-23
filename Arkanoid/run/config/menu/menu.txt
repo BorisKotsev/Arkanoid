@@ -1,15 +1,3 @@
 Menu_Img: menu.bmp
 
-Exit_path: exitBtn.txt
 
-EasyImgs: Easy.bmp Easy2.bmp
-
-MeduimImgs: Medium.bmp Medium2.bmp
-
-HardImgs: Hard.bmp Hard2.bmp
-
-EasyRect: 190 423 299 116
-
-MeduimRect: 137 625 335 79
-
-HardRect: 148 805 208 75

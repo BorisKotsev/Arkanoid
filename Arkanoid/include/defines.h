@@ -36,6 +36,7 @@ static string SOUND_FOLDER = "music\\";
 static string TITLE_SCREEN_FOLDER = "titleScreen\\";
 static string WIN_SCREEN_FOLDER = "winScreen\\";
 static string GAME_FOLDER = "game\\";
+static string BRICKS_FOLDER = "bricks\\";
 
 struct int2
 {
@@ -191,19 +192,6 @@ struct float2
     }
 };
 
-enum class FONT
-{
-    NONE = 0,
-    ASSASIN = 1
-};
-
-enum class COLOR
-{
-    NONE = 0,
-    LIGHT = 1,
-    DARK = 2
-};
-
 struct Drawable
 {
     SDL_Texture* texture = nullptr;
@@ -219,6 +207,13 @@ struct DrawableWithOpacity : public Drawable
 {
     int opacity = 0;
     int changePerFrame = 0;
+};
+
+struct BrickData : Drawable
+{
+    SDL_Texture* m_crackedTexture;
+	
+    int m_hp;
 };
 
 enum class SOUND

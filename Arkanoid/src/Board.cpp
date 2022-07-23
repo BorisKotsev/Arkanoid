@@ -26,18 +26,21 @@ void Board::load()
 	stream.close();
 	
 	m_background = loadTexture(GAME_FOLDER + background);
+
+	m_brick.init();
 }
 
 void Board::update()
 {
-	
+	m_brick.update();
 }
 
 void Board::draw()
 {
 	drawObject(m_background);
-}
 
+	m_brick.draw();
+}
 
 void Board::destroy()
 {

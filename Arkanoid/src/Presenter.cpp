@@ -21,7 +21,7 @@ void Presenter::init()
 
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
-    m_main_window = SDL_CreateWindow("Chinese chess",
+    m_main_window = SDL_CreateWindow("Arkanoid",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         1366, 768, 0);
     m_main_renderer = SDL_CreateRenderer(m_main_window,
@@ -91,4 +91,9 @@ void Presenter::drawObject(DrawableWithOpacity& drawable)
     SDL_SetTextureAlphaMod(drawable.texture, drawable.opacity);
 
     SDL_RenderCopy(m_main_renderer, drawable.texture, NULL, &drawable.rect);
+}
+
+void Presenter::drawObject(BrickData& brick)
+{
+    SDL_RenderCopy(m_main_renderer, brick.texture, NULL, &brick.rect);
 }

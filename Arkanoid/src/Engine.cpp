@@ -45,3 +45,11 @@ bool MouseIsInRect(int2 coor, SDL_Rect rect)
 
     return false;
 }
+
+bool collRectRect(SDL_Rect a, SDL_Rect b)
+{
+    if (a.x <= b.x + b.w && a.x + a.w >= b.x && a.y <= b.y + b.h && a.y + a.h >= b.y)
+        return true;
+
+    return false;
+}

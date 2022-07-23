@@ -5,6 +5,7 @@
 
 #include "Presenter.h"
 #include "defines.h"
+#include "Brick.h"
 
 class Board
 {
@@ -22,5 +23,7 @@ public:
 	
 private:
 	SDL_Texture* m_background;
+
+	Brick m_brick;
 	
 };

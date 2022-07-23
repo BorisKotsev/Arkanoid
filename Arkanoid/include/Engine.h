@@ -12,3 +12,4 @@
 
 SDL_Texture* LoadTexture(string configFile, SDL_Renderer* renderer);
 bool MouseIsInRect(int2 coor, SDL_Rect rect);
+bool collRectRect(SDL_Rect a, SDL_Rect b);

@@ -29,7 +29,7 @@ void SoundManager::init()
 
 	m_backgroundMusic = Mix_LoadWAV((SOUND_FOLDER + background).c_str());
 
-	playSound(SOUND::BACKGROUND);
+	//playSound(SOUND::BACKGROUND);
 }
 
 void SoundManager::playSound(SOUND sound)
