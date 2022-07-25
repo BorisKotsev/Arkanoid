@@ -151,3 +151,8 @@ bool isAnyKeyPressed()
     }
     return false;
 }
+
+bool isKeyPressed(SDL_Scancode code)
+{
+    return InputManager::m_keyboardState[code]; 
+}

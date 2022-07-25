@@ -28,7 +28,7 @@ public:
     static const Uint8* m_keyboardState;
 
     int m_scroll;
-
+	
     void handleInput(); //< call the SDL_PollEvent fnc and update all variables
     void setMouseMultiply(float2 multiplier); //< multiply the mouseCoor corespondingly to the screen resolution
 
@@ -54,3 +54,4 @@ private:
 bool isMouseInRect(SDL_Rect rect);
 bool mouseIsPressed();
 bool isAnyKeyPressed();
+bool isKeyPressed(SDL_Scancode code);

@@ -25,5 +25,12 @@ private:
 	SDL_Texture* m_background;
 
 	Brick m_brick;
-	
+
+	Drawable m_space;
+
+	Drawable m_ball;
+
+	int m_speed;
+
+	pair<SDL_Scancode, SDL_Scancode> m_direction;
 };

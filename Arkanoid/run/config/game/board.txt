@@ -1,1 +1,13 @@
 BackgroundImg: background.bmp
+
+Scancodes: 79 80
+
+Rect: 860 1000 200 50
+
+Img: space.bmp
+
+Speed: 10
+
+BallRect: 945 800 30 30
+
+Img: ball.bmp
