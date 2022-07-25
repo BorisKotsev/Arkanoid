@@ -1,6 +1,8 @@
 #pragma once
 
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Engine.h"
 #include "defines.h"
