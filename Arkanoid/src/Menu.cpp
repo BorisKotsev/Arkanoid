@@ -22,8 +22,7 @@ void Menu::init()
 
 	stream >> tmp >> img;
 	stream >> tmp >> exitBtnPath;
-	stream >> tmp >> playBtn;
-	stream >> tmp >> playBtnGlow;
+	stream >> tmp >> playBtn >> playBtnGlow;
 	stream >> tmp >> m_playBtn.rect.x >> m_playBtn.rect.y >> m_playBtn.rect.w >> m_playBtn.rect.h;
 	
 	stream.close();
@@ -54,7 +53,6 @@ void Menu::run()
 
 		if (mouseIsPressed())
 		{
-			//easy
 			world.m_stateManager.changeGameState(GAME_STATE::GAME);
 		}
 	}

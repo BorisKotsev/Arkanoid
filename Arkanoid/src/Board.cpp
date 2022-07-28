@@ -14,7 +14,7 @@ void Board::load()
 {
 	fstream stream;
 
-	string tmp, background, img, ballImg;
+	string tmp, background, img;
 
 	int2 dir;
 
@@ -25,25 +25,38 @@ void Board::load()
 	stream >> tmp >> m_space.rect.x >> m_space.rect.y >> m_space.rect.w >> m_space.rect.h;
 	stream >> tmp >> img;
 	stream >> tmp >> m_speed;
-	stream >> tmp >> m_ball.rect.x >> m_ball.rect.y >> m_ball.rect.w >> m_ball.rect.h;
-	stream >> tmp >> ballImg;
 
 	stream.close();
-	
+
 	m_background = loadTexture(GAME_FOLDER + background);
 
 	m_direction.first = (SDL_Scancode)dir.x; // Right
 	m_direction.second = (SDL_Scancode)dir.y; // Left
 
 	m_space.texture = loadTexture(GAME_FOLDER + img);
-	m_ball.texture = loadTexture(GAME_FOLDER + ballImg);
 
 	m_brick.init();
+
+	m_ball.init();
 }
 
 void Board::update()
 {
-	m_brick.update(m_ball.rect);
+	m_ball.update();
+	
+	collLeftRight(m_ball.getRect(), m_space.rect);
+	collUpDown(m_ball.getRect(), m_space.rect);
+	
+	for (int i = 0; i < m_ROWS; i++)
+	{
+		for (int j = 0; j < m_COLS; j++)
+		{
+			collLeftRight(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
+			collUpDown(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
+		}
+	}
+
+	m_brick.update(m_ball.getRect());
 
 	if (isKeyPressed(m_direction.first))
 	{
@@ -71,7 +84,7 @@ void Board::draw()
 
 	drawObject(m_space);
 
-	drawObject(m_ball);
+	m_ball.draw();
 
 	m_brick.draw();
 }
@@ -79,4 +92,59 @@ void Board::draw()
 void Board::destroy()
 {
 	
+}
+
+void Board::collUpDown(SDL_Rect rect1, SDL_Rect rect2)
+{
+	if (rect1.y > rect2.y && rect1.y < rect2.y + rect2.h &&
+		!(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h) &&
+		((rect2.x > rect1.x && rect2.x < rect1.x + rect1.w) ||
+		(rect2.x + rect2.w > rect1.x && rect2.x + rect2.w < rect1.x + rect1.w)))
+	{
+		int2 center = { rect1.y + rect1.h / 2, rect2.y + rect2.h / 2 };
+		
+		m_ball.collisionY({abs(center.y - center.x), (rect2.h / 2)});
+		
+		rect1.y = rect2.y + rect2.h;
+		
+		return;
+	}
+	
+	if (rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h &&
+		!(rect1.y > rect2.y && rect1.y < rect2.y + rect2.h) &&
+		((rect2.x > rect1.x && rect2.x < rect1.x + rect1.w)||
+		(rect2.x + rect2.w > rect1.x && rect2.x + rect2.w < rect1.x + rect1.w)))
+	{
+		int2 center = { rect1.y + rect1.h / 2 , rect2.y + rect2.h / 2 };
+		
+		m_ball.collisionY({ abs(center.y - center.x), (rect2.h / 2) });
+		
+		rect1.y = rect2.y - rect1.h;
+	}
+}
+
+void Board::collLeftRight(SDL_Rect rect1, SDL_Rect rect2)
+{
+	if (rect1.x > rect2.x && rect1.x < rect2.x + rect2.w &&
+		((rect1.y > rect2.y && rect1.y < rect2.y + rect2.h)||
+		(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h)))
+	{
+		int2 center = { rect1.x + rect1.w / 2 , rect2.x + rect2.w / 2 };
+		
+		m_ball.collisionX({ abs(center.y - center.x), (rect2.w / 2) });
+		
+		rect1.x = rect2.x + rect2.w;
+		
+		return;
+	}
+	
+	if (rect1.x + rect1.w > rect2.x && rect1.x + rect1.w < rect2.x + rect2.w &&
+		((rect1.y > rect2.y && rect1.y < rect2.y + rect2.h)||
+		(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h)))
+	{
+		int2 center = { rect1.x + rect1.w / 2 , rect2.x + rect2.w / 2 };
+		
+		m_ball.collisionX({ abs(center.y - center.x), (rect2.w / 2) });
+		rect1.x = rect2.x - rect1.w;
+	}
 }

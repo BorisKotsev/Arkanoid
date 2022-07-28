@@ -2,10 +2,12 @@
 
 #include <map>
 #include <fstream>
+#include <math.h>
 
 #include "Presenter.h"
 #include "defines.h"
 #include "Brick.h"
+#include "Ball.h"
 
 class Board
 {
@@ -20,15 +22,18 @@ public:
 	void draw();
 	
 	void destroy();
+
+	void collUpDown(SDL_Rect rect1, SDL_Rect rect2);
+	void collLeftRight(SDL_Rect rect1, SDL_Rect rect2);
 	
 private:
 	SDL_Texture* m_background;
 
 	Brick m_brick;
 
-	Drawable m_space;
+	Ball m_ball;
 
-	Drawable m_ball;
+	Drawable m_space;
 
 	int m_speed;
 

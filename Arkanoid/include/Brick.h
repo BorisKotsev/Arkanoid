@@ -21,4 +21,7 @@ public:
 	void draw();
 	
 	BrickData m_allBricks [m_ROWS][m_COLS];
+	
+private:	
+	int m_counter = 0;
 };

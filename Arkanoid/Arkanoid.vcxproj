@@ -207,6 +207,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Brick.cpp" />
     <ClCompile Include="src\Button.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Ball.h" />
     <ClInclude Include="include\Board.h" />
     <ClInclude Include="include\Brick.h" />
     <ClInclude Include="include\Button.h" />

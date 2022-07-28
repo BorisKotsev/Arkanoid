@@ -212,6 +212,7 @@ struct DrawableWithOpacity : public Drawable
 struct BrickData : Drawable
 {
     SDL_Texture* m_crackedTexture;
+    SDL_Texture* m_borderTexture;
 	
     int m_hp;
 };

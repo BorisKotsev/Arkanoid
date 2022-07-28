@@ -8,6 +8,4 @@ Img: space.bmp
 
 Speed: 10
 
-BallRect: 945 800 30 30
 
-Img: ball.bmp

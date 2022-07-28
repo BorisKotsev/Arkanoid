@@ -1,5 +1,7 @@
 #include "Brick.h"
-#include "Presenter.h"
+#include "World.h"
+
+extern World world;
 
 Brick::Brick()
 {
@@ -36,6 +38,7 @@ void Brick::init()
 
 	_data.texture = loadTexture(GAME_FOLDER + img + ".bmp");
 	_data.m_crackedTexture = loadTexture(GAME_FOLDER + img + "_cracked.bmp");
+	_data.m_borderTexture = loadTexture(GAME_FOLDER + img + "_border.bmp");
 
 	int _tmp = _data.rect.x;
 
@@ -51,6 +54,7 @@ void Brick::init()
 			SDL_SetTextureColorMod(_data.m_crackedTexture, _r1, _r2, _r3);
 
 			_data.texture = loadTexture(GAME_FOLDER + img + ".bmp");
+			_data.m_crackedTexture = loadTexture(GAME_FOLDER + img + "_cracked.bmp");
 			
 			m_allBricks[i][j] = _data;
 			
@@ -81,7 +85,16 @@ void Brick::update(SDL_Rect ball)
 				if (m_allBricks[i][j].m_hp == 0)
 				{
 					SDL_DestroyTexture(m_allBricks[i][j].texture);
+					SDL_DestroyTexture(m_allBricks[i][j].m_crackedTexture);
+					
 					m_allBricks[i][j].rect = { 0,0,0,0 };
+
+					m_counter++;
+				}
+
+				if (m_counter >= m_ROWS * m_COLS)
+				{
+					world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
 				}
 			}
 		}
@@ -95,6 +108,7 @@ void Brick::draw()
 		for (int j = 0; j < m_COLS; j++)
 		{	
 			drawObject(m_allBricks[i][j]);
+			SDL_RenderCopy(Presenter::m_main_renderer, m_allBricks[i][j].m_borderTexture, NULL, &m_allBricks[i][j].rect);
 		}
 	}
 }

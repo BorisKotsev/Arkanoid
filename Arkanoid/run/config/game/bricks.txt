@@ -4,4 +4,4 @@ Img: brick
 
 Offset: 330 130
 
-Hp: 100
+Hp: 30
