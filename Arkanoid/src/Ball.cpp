@@ -30,13 +30,29 @@ void Ball::init()
 
 void Ball::update()
 {
-	m_ball.rect.x += m_speed.x;
-	m_ball.rect.y += m_speed.y;
+
+	if (m_ball.rect.x > Presenter::m_SCREEN_WIDTH - m_ball.rect.w)
+	{
+		m_speed.x *= -1;
+	}
+	
+	if (m_ball.rect.y < 0)
+	{
+		m_speed.y *= -1;
+	}
+
+	if (m_ball.rect.x < 0)
+	{
+		m_speed.x *= -1;
+	}
 
 	if (m_ball.rect.y > Presenter::m_SCREEN_HEIGHT)
 	{
 		world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
 	}
+	
+	m_ball.rect.x += m_speed.x;
+	m_ball.rect.y += m_speed.y;
 }
 
 void Ball::draw()
@@ -51,12 +67,14 @@ SDL_Rect Ball::getRect()
 
 void Ball::collisionX(int2 percent)
 {
-	m_speed.x *= -1;
-	m_speed.y = m_speed.y * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
+	//m_speed.x *= -1;
+	m_speed.y *= -1;
+	//m_speed.y = m_speed.y * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
 }
 
 void Ball::collisionY(int2 percent)
 {
-	m_speed.y *= -1;
-	m_speed.x = m_speed.x * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
+	//m_speed.y *= -1;
+	m_speed.x *= -1;
+	//m_speed.x = m_speed.x * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
 }

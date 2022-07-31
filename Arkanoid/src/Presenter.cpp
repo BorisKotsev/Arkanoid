@@ -6,8 +6,8 @@ extern World world;
 
 SDL_Window* Presenter::m_main_window = nullptr;
 SDL_Renderer* Presenter::m_main_renderer = nullptr;
-unsigned int Presenter::m_SCREEN_WIDTH = 0;
-unsigned int Presenter::m_SCREEN_HEIGHT = 0;
+int Presenter::m_SCREEN_WIDTH = 0;
+int Presenter::m_SCREEN_HEIGHT = 0;
 
 SDL_Renderer* Presenter::getRenderer()
 {

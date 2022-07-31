@@ -21,8 +21,8 @@ public:
 	static SDL_Window* m_main_window;
 	static SDL_Renderer* m_main_renderer;
 	
-	static unsigned int m_SCREEN_WIDTH;
-	static unsigned int m_SCREEN_HEIGHT;
+	static int m_SCREEN_WIDTH;
+	static int m_SCREEN_HEIGHT;
 
 	void init();
 	void update();

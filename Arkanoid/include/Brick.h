@@ -7,8 +7,8 @@
 #include "Engine.h"
 #include "defines.h"
 
-const int m_ROWS = 4;
-const int m_COLS = 5;
+const int m_ROWS = 10;
+const int m_COLS = 18;
 
 class Brick
 {
@@ -17,11 +17,9 @@ public:
 	~Brick();
 
 	void init();
-	void update(SDL_Rect ball);
 	void draw();
 	
 	BrickData m_allBricks [m_ROWS][m_COLS];
-	
-private:	
+		
 	int m_counter = 0;
 };

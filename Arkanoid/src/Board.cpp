@@ -1,6 +1,7 @@
 #include "Board.h"
-#include "Presenter.h"
-#include "InputManager.h"
+#include "World.h"
+
+extern World world;
 
 Board::Board()
 {
@@ -53,10 +54,29 @@ void Board::update()
 		{
 			collLeftRight(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
 			collUpDown(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
+
+			if (collRectRect(m_brick.m_allBricks[i][j].rect, m_ball.getRect()))
+			{
+				m_brick.m_allBricks[i][j].m_hp--;
+
+				if (m_brick.m_allBricks[i][j].m_hp == 0)
+				{
+					SDL_DestroyTexture(m_brick.m_allBricks[i][j].texture);
+
+					m_brick.m_allBricks[i][j].rect = { 0,0,0,0 };
+
+					m_brick.m_counter++;
+				}
+
+				if (m_brick.m_counter >= m_ROWS * m_COLS)
+				{
+					world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
+				}
+
+				return;
+			}
 		}
 	}
-
-	m_brick.update(m_ball.getRect());
 
 	if (isKeyPressed(m_direction.first))
 	{
@@ -145,6 +165,7 @@ void Board::collLeftRight(SDL_Rect rect1, SDL_Rect rect2)
 		int2 center = { rect1.x + rect1.w / 2 , rect2.x + rect2.w / 2 };
 		
 		m_ball.collisionX({ abs(center.y - center.x), (rect2.w / 2) });
+		
 		rect1.x = rect2.x - rect1.w;
 	}
 }
