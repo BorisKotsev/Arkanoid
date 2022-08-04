@@ -13,6 +13,8 @@ Board::~Board()
 
 void Board::load()
 {
+	srand(time(0));
+	
 	fstream stream;
 
 	string tmp, background, img;
@@ -39,31 +41,47 @@ void Board::load()
 	m_brick.init();
 
 	m_ball.init();
+
+	m_drops.initAll();
+
+	m_allDrops.clear();
 }
 
 void Board::update()
 {
 	m_ball.update();
 	
-	collLeftRight(m_ball.getRect(), m_space.rect);
-	collUpDown(m_ball.getRect(), m_space.rect);
+	collLeftRight(m_ball.m_ball.rect, m_space.rect);
+	collUpDown(m_ball.m_ball.rect, m_space.rect);
 	
 	for (int i = 0; i < m_ROWS; i++)
 	{
 		for (int j = 0; j < m_COLS; j++)
 		{
-			collLeftRight(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
-			collUpDown(m_ball.getRect(), m_brick.m_allBricks[i][j].rect);
+			collLeftRight(m_ball.m_ball.rect, m_brick.m_allBricks[i][j].rect);
+			collUpDown(m_ball.m_ball.rect, m_brick.m_allBricks[i][j].rect);
 
-			if (collRectRect(m_brick.m_allBricks[i][j].rect, m_ball.getRect()))
+			if (collRectRect(m_brick.m_allBricks[i][j].rect, m_ball.m_ball.rect))
 			{
-				m_brick.m_allBricks[i][j].m_hp--;
+				m_brick.m_allBricks[i][j].m_hp -= m_ball.m_dmg;
 
-				if (m_brick.m_allBricks[i][j].m_hp == 0)
-				{
+				if (m_brick.m_allBricks[i][j].m_hp <= 0)
+				{	
+					int r = rand() % 3;
+
+					if (r == 1)
+					{
+						Dropable _drop = m_drops.createNew();
+						
+						_drop.m_drop.rect.x = m_brick.m_allBricks[i][j].rect.x;
+						_drop.m_drop.rect.y = m_brick.m_allBricks[i][j].rect.y;
+
+						m_allDrops.push_back(_drop);
+					}
+					
 					SDL_DestroyTexture(m_brick.m_allBricks[i][j].texture);
 
-					m_brick.m_allBricks[i][j].rect = { 0,0,0,0 };
+					m_brick.m_allBricks[i][j].rect = {0, 0, 0, 0};
 
 					m_brick.m_counter++;
 				}
@@ -71,10 +89,46 @@ void Board::update()
 				if (m_brick.m_counter >= m_ROWS * m_COLS)
 				{
 					world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
+					
+					return;
 				}
+			}
+		}
+	}
+
+	for (int i = 0; i < m_allDrops.size(); i++)
+	{
+		m_allDrops[i].update();
+		
+		if (collRectRect(m_space.rect, m_allDrops[i].m_drop.rect))
+		{
+			if (m_allDrops[i].m_type == "BigBall")
+			{				
+				m_allDrops.erase(m_allDrops.begin() + i);
+				
+				m_ball.m_ball.rect.w += 20;
+				m_ball.m_ball.rect.h += 20;
 
 				return;
 			}
+			else if (m_allDrops[i].m_type == "Reverse")
+			{
+				m_allDrops.erase(m_allDrops.begin() + i);
+				
+				SDL_Scancode _tmp = m_direction.first;
+
+				m_direction.first = m_direction.second;
+				m_direction.second = _tmp;
+				
+				return;
+			}
+		}
+
+		if (m_allDrops[i].m_drop.rect.y >= Presenter::m_SCREEN_HEIGHT)
+		{
+			m_allDrops.erase(m_allDrops.begin() + i);
+
+			return;
 		}
 	}
 
@@ -107,11 +161,11 @@ void Board::draw()
 	m_ball.draw();
 
 	m_brick.draw();
-}
 
-void Board::destroy()
-{
-	
+	for (int i = 0; i < m_allDrops.size(); i++)
+	{
+		m_allDrops[i].draw();
+	}
 }
 
 void Board::collUpDown(SDL_Rect rect1, SDL_Rect rect2)

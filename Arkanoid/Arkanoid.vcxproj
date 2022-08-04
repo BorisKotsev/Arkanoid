@@ -212,6 +212,7 @@
     <ClCompile Include="src\Brick.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\ConfigManager.cpp" />
+    <ClCompile Include="src\Dropable.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\ConfigManager.h" />
     <ClInclude Include="include\defines.h" />
+    <ClInclude Include="include\Dropable.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\InputManager.h" />

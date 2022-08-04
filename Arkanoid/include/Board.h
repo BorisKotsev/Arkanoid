@@ -8,6 +8,7 @@
 #include "defines.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "Dropable.h"
 
 class Board
 {
@@ -21,8 +22,6 @@ public:
 	
 	void draw();
 	
-	void destroy();
-
 	void collUpDown(SDL_Rect rect1, SDL_Rect rect2);
 	void collLeftRight(SDL_Rect rect1, SDL_Rect rect2);
 	
@@ -33,9 +32,15 @@ private:
 
 	Ball m_ball;
 
+	Dropable m_drops;
+	
 	Drawable m_space;
 
+	vector<Dropable> m_allDrops;
+
 	int m_speed;
+
+	int m_randIndex;
 
 	pair<SDL_Scancode, SDL_Scancode> m_direction;
 };

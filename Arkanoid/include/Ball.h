@@ -18,11 +18,10 @@ public:
 
 	void collisionX(int2 percent);
 	void collisionY(int2 percent);
-	
-	SDL_Rect getRect();
-	
-private:
+		
 	Drawable m_ball;
 
 	float2 m_direction;
+
+	int m_dmg;
 };

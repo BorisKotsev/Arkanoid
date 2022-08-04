@@ -22,6 +22,7 @@ void Ball::init()
 	stream >> tmp >> m_ball.rect.x >> m_ball.rect.y >> m_ball.rect.w >> m_ball.rect.h;
 	stream >> tmp >> img;
 	stream >> tmp >> m_speed.x >> m_speed.y;
+	stream >> tmp >> m_dmg;
 
 	stream.close();
 
@@ -30,7 +31,6 @@ void Ball::init()
 
 void Ball::update()
 {
-
 	if (m_ball.rect.x > Presenter::m_SCREEN_WIDTH - m_ball.rect.w)
 	{
 		m_speed.x *= -1;
@@ -58,11 +58,6 @@ void Ball::update()
 void Ball::draw()
 {	
 	drawObject(m_ball);
-}
-
-SDL_Rect Ball::getRect()
-{
-	return m_ball.rect;
 }
 
 void Ball::collisionX(int2 percent)

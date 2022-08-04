@@ -1,0 +1,8 @@
+WH: 100 50
+Speed: 1
+
+Type: BigBall
+Img: bigBall.bmp
+
+Type: Reverse
+Img: reverse.bmp

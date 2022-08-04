@@ -37,6 +37,7 @@ static string TITLE_SCREEN_FOLDER = "titleScreen\\";
 static string WIN_SCREEN_FOLDER = "winScreen\\";
 static string GAME_FOLDER = "game\\";
 static string BRICKS_FOLDER = "bricks\\";
+static string BOOSTS_FOLDER = "boosts\\";
 
 struct int2
 {
