@@ -8,4 +8,6 @@ Img: space.bmp
 
 Speed: 10
 
+Rect: 660 540 600 300
 
+Img: pressSpace.bmp

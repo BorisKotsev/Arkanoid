@@ -2,6 +2,6 @@ BallRect 945 700 30 30
 
 Img ball.bmp
 
-Speed: 5 5
+Speed: 6 6
 
 Dmg: 1

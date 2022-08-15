@@ -15,6 +15,10 @@ class Board
 public:
 	Board();
 	~Board();
+
+	int m_lives;
+
+	vector<Drawable> m_hearts;
 	
 	void load();
 
@@ -27,20 +31,31 @@ public:
 	
 private:
 	SDL_Texture* m_background;
+	SDL_Texture* m_deadTexture;
 
 	Brick m_brick;
 
-	Ball m_ball;
+	vector<Ball> m_balls;
 
 	Dropable m_drops;
-	
 	Drawable m_space;
+	Drawable m_spacePressed;
 
 	vector<Dropable> m_allDrops;
 
 	int m_speed;
-
-	int m_randIndex;
+	int m_offset;
 
 	pair<SDL_Scancode, SDL_Scancode> m_direction;
+
+	void loadHearts();
+	void drawHearts();
+
+	void removeHeart();
+	void addHeart();
+	void moveSpace();
+	void updateDrops();
+	void updateBricks();
+
+	bool m_isSpacePressed = false;
 };

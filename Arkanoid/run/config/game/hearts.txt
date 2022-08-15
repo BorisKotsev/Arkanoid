@@ -1,0 +1,7 @@
+HeartRect: 1781 25 114 100
+
+HeartsImg: heart.bmp deadHeart.bmp
+
+Offset: 139
+
+Lives: 3

@@ -6,3 +6,36 @@ Img: bigBall.bmp
 
 Type: Reverse
 Img: reverse.bmp
+
+Type: BiggerSpace
+Img: biggerSpace.bmp
+
+Type: SmallerSpace
+Img: smallerSpace.bmp
+
+Type: AddBall
+Img: addBall.bmp
+
+Type: AddLive
+Img: addLive.bmp
+
+Type: SpeedIncreaseBall
+Img: speedIncreaseBall.bmp
+
+Type: SpeedDecreaseBall
+Img: speedDecreaseBall.bmp
+
+Type: MegaBall
+Img: megaBall.bmp
+
+Type: SpeedIncreaseSpace
+Img: speedIncreaseSpace.bmp
+
+Type: SpeedDecreaseSpace
+Img: speedDecreaseSpace.bmp
+
+Type: MultiplyBalls
+Img: multiplyBalls.bmp
+
+Type: SmallBall
+Img: smallBall.bmp

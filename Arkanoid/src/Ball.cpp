@@ -45,11 +45,6 @@ void Ball::update()
 	{
 		m_speed.x *= -1;
 	}
-
-	if (m_ball.rect.y > Presenter::m_SCREEN_HEIGHT)
-	{
-		world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
-	}
 	
 	m_ball.rect.x += m_speed.x;
 	m_ball.rect.y += m_speed.y;
