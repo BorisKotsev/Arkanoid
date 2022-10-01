@@ -15,7 +15,6 @@ public:
 	StateManager m_stateManager;
 	InputManager m_inputManager;
 	SoundManager m_soundManager;
-	ConfigManager m_config;
 
 	void init();
 	void run();

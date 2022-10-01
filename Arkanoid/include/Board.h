@@ -26,8 +26,8 @@ public:
 	
 	void draw();
 	
-	void collUpDown(SDL_Rect rect1, SDL_Rect rect2);
-	void collLeftRight(SDL_Rect rect1, SDL_Rect rect2);
+	void collUpDown(SDL_Rect rect1, SDL_Rect rect2, int index);
+	void collLeftRight(SDL_Rect rect1, SDL_Rect rect2, int index);
 	
 private:
 	SDL_Texture* m_background;
@@ -45,6 +45,8 @@ private:
 
 	int m_speed;
 	int m_offset;
+	
+	int2 dir;
 
 	pair<SDL_Scancode, SDL_Scancode> m_direction;
 

@@ -199,11 +199,6 @@ struct Drawable
     SDL_Rect rect = { 0 }; /// The rect where we draw
 };
 
-struct DrawableForMenu : public Drawable
-{
-    SDL_Texture* glowTexture = nullptr;
-};
-
 struct DrawableWithOpacity : public Drawable
 {
     int opacity = 0;

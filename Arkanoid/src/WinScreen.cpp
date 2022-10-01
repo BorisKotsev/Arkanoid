@@ -31,7 +31,7 @@ void WinScreen::init()
 	m_background = loadTexture(WIN_SCREEN_FOLDER + background);
 
 	m_playAgain.texture = loadTexture(WIN_SCREEN_FOLDER + playAgain);
-	m_playAgain.glowTexture = loadTexture(WIN_SCREEN_FOLDER + playAgainGlow);
+	//m_playAgain.glowTexture = loadTexture(WIN_SCREEN_FOLDER + playAgainGlow);
 
 	m_exitBtn.init(exitBtnPath, MENU_FOLDER);
 }
@@ -45,7 +45,7 @@ void WinScreen::run()
 	
 	if (isMouseInRect(m_playAgain.rect))
 	{
-		SDL_RenderCopy(world.m_presenter.m_main_renderer, m_playAgain.glowTexture, NULL, &m_playAgain.rect);
+		//SDL_RenderCopy(world.m_presenter.m_main_renderer, m_playAgain.glowTexture, NULL, &m_playAgain.rect);
 
 		if (mouseIsPressed())
 		{			

@@ -7,8 +7,8 @@
 #include "Engine.h"
 #include "defines.h"
 
-const int m_ROWS = 10;
-const int m_COLS = 18;
+const int m_ROWS = 8;
+const int m_COLS = 17;
 
 class Brick
 {

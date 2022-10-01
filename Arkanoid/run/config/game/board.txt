@@ -2,12 +2,12 @@ BackgroundImg: background.bmp
 
 Scancodes: 79 80
 
-Rect: 860 1000 200 50
+Rect: 860 940 200 50
 
 Img: space.bmp
 
-Speed: 10
+Speed: 12
 
-Rect: 660 540 600 300
+Rect: 820 772 280 125
 
 Img: pressSpace.bmp

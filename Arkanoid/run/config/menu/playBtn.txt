@@ -1,0 +1,7 @@
+Path: playBtn.bmp
+
+Start_Rect: 760 540 400 200
+
+Max_Increase: 20
+
+Increase_Per_Frame: 4

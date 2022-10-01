@@ -19,8 +19,6 @@ void Board::load()
 
 	string tmp, background, img, img2;
 
-	int2 dir;
-
 	stream.open(CONFIG_FOLDER + GAME_FOLDER + "board.txt");
 
 	stream >> tmp >> background;
@@ -80,7 +78,7 @@ void Board::loadHearts()
 
 	for (int i = 1; i < m_lives; i++)
 	{
-		_heart.rect.x -= m_offset;
+		_heart.rect.x += m_offset;
 
 		m_hearts.push_back(_heart);
 	}
@@ -108,6 +106,8 @@ void Board::update()
 		return;
 	}
 	
+	updateDrops();
+
 	for (int i = 0; i < m_balls.size(); i++)
 	{
 		if (m_balls[i].m_ball.rect.y > Presenter::m_SCREEN_HEIGHT)
@@ -115,16 +115,19 @@ void Board::update()
 			m_balls.erase(m_balls.begin() + i);
 		}
 	}
-	
+
 	for (int i = 0; i < m_balls.size(); i++)
 	{
-		collLeftRight(m_balls[i].m_ball.rect, m_space.rect);
-		collUpDown(m_balls[i].m_ball.rect, m_space.rect);
-	}
-	
-	updateBricks();
+		if (collRectRect(m_balls[i].m_ball.rect, m_space.rect))
+		{
+			m_balls[i].m_moveDown = false;
 
-	updateDrops();
+			collUpDown(m_balls[i].m_ball.rect, m_space.rect, i);
+			collLeftRight(m_balls[i].m_ball.rect, m_space.rect, i);
+		}
+	}
+
+	updateBricks();
 
 	moveSpace();
 }
@@ -175,8 +178,16 @@ void Board::removeHeart()
 	//world.m_soundManager.playSound(SOUND::BOMB_EXPLOSION);
 
 	m_hearts[m_lives].texture = m_deadTexture;
+	
+	m_direction.first = (SDL_Scancode)dir.x; // Right
+	m_direction.second = (SDL_Scancode)dir.y; // Left
+
+	m_space.rect.w = 200;
+	m_speed = 10;
 
 	Ball _ball;
+
+	_ball.m_moveDown = true;
 	
 	_ball.init();
 
@@ -194,17 +205,17 @@ void Board::removeHeart()
 
 void Board::addHeart()
 {	
-	if (m_lives == 3)
+	if (m_lives >= 3)
 	{
 		Drawable _heart = m_hearts[0];
 		
-		_heart.rect.x -= m_offset * 3;
+		_heart.rect.x += m_offset * m_lives;
 
 		m_hearts.push_back(_heart);
 	}
 	
 	m_lives++;
-
+	
 	m_hearts[m_lives - 1].texture = m_hearts[0].texture;
 }
 
@@ -290,6 +301,19 @@ void Board::updateDrops()
 				_ball.init();
 
 				_ball.m_ball.rect = m_balls[0].m_ball.rect;
+
+				_ball.m_moveDown = false;
+
+				int r = rand() % 11;
+
+				if (r < 6)
+				{
+					_ball.m_ball.rect.x -= r * 2;
+				}
+				else
+				{
+					_ball.m_ball.rect.y -= r * 2;
+				}
 
 				m_balls.push_back(_ball);
 
@@ -379,7 +403,20 @@ void Board::updateDrops()
 					_ball.init();
 
 					_ball.m_ball.rect = m_balls[0].m_ball.rect;
-					 
+
+					_ball.m_moveDown = false;
+
+					int r = rand() % 11;
+
+					if (r < 6)
+					{
+						_ball.m_ball.rect.x -= r * 2;
+					}
+					else
+					{
+						_ball.m_ball.rect.y -= r * 2;
+					}
+										 
 					m_balls.push_back(_ball);
 				}
 
@@ -421,21 +458,27 @@ void Board::updateBricks()
 		{
 			for (int j = 0; j < m_COLS; j++)
 			{
-				collLeftRight(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect);
-				collUpDown(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect);
-
 				if (collRectRect(m_brick.m_allBricks[i][j].rect, m_balls[p].m_ball.rect))
 				{
+					collLeftRight(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect, p);
+					collUpDown(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect, p);
+					
 					m_brick.m_allBricks[i][j].m_hp -= m_balls[p].m_dmg;
 
 					if (m_brick.m_allBricks[i][j].m_hp <= 0)
 					{
-						int r = rand() % 3;
+						int r = rand() % 4;
 
-						if (true) // r == 1
+						if (r == 1) 
 						{
+							label: 
 							Dropable _drop = m_drops.createNew();
 
+							/*if (_drop.m_type != "AddBall")
+							{
+								goto label;
+							}*/
+							
 							_drop.m_drop.rect.x = m_brick.m_allBricks[i][j].rect.x;
 							_drop.m_drop.rect.y = m_brick.m_allBricks[i][j].rect.y;
 
@@ -461,70 +504,34 @@ void Board::updateBricks()
 	}
 }
 
-void Board::collUpDown(SDL_Rect rect1, SDL_Rect rect2)
+void Board::collUpDown(SDL_Rect rect1, SDL_Rect rect2, int index)
 {
-	if (rect1.y > rect2.y && rect1.y < rect2.y + rect2.h &&
-		!(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h) &&
-		((rect2.x > rect1.x && rect2.x < rect1.x + rect1.w) ||
-		(rect2.x + rect2.w > rect1.x && rect2.x + rect2.w < rect1.x + rect1.w)))
+	if (rect1.y < rect2.y)
 	{
-		int2 center = { rect1.y + rect1.h / 2, rect2.y + rect2.h / 2 };
-		
-		for (int i = 0; i < m_balls.size(); i++)
-		{
-			m_balls[i].collisionY({abs(center.y - center.x), (rect2.h / 2)});
-		}
-		
+		m_balls[index].collisionY();
 		rect1.y = rect2.y + rect2.h;
-		
-		return;
+		return;	
 	}
 	
-	if (rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h &&
-		!(rect1.y > rect2.y && rect1.y < rect2.y + rect2.h) &&
-		((rect2.x > rect1.x && rect2.x < rect1.x + rect1.w)||
-		(rect2.x + rect2.w > rect1.x && rect2.x + rect2.w < rect1.x + rect1.w)))
+	if (rect1.y + rect1.h > rect2.y + rect2.h)
 	{
-		int2 center = { rect1.y + rect1.h / 2 , rect2.y + rect2.h / 2 };
-		
-		for (int i = 0; i < m_balls.size(); i++)
-		{
-			m_balls[i].collisionY({abs(center.y - center.x), (rect2.h / 2)});
-		}
-		
-		rect1.y = rect2.y - rect1.h;
+		m_balls[index].collisionY();
+		rect1.y = rect2.y + rect2.h - rect1.h;
 	}
 }
 
-void Board::collLeftRight(SDL_Rect rect1, SDL_Rect rect2)
+void Board::collLeftRight(SDL_Rect rect1, SDL_Rect rect2, int index)
 {
-	if (rect1.x > rect2.x && rect1.x < rect2.x + rect2.w &&
-		((rect1.y > rect2.y && rect1.y < rect2.y + rect2.h)||
-		(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h)))
+	if (rect1.x < rect2.x)
 	{
-		int2 center = { rect1.x + rect1.w / 2 , rect2.x + rect2.w / 2 };
-		
-		for (int i = 0; i < m_balls.size(); i++)
-		{
-			m_balls[i].collisionX({abs(center.y - center.x), (rect2.w / 2)});
-		}
-		
+		m_balls[index].collisionX();
 		rect1.x = rect2.x + rect2.w;
-		
 		return;
 	}
 	
-	if (rect1.x + rect1.w > rect2.x && rect1.x + rect1.w < rect2.x + rect2.w &&
-		((rect1.y > rect2.y && rect1.y < rect2.y + rect2.h)||
-		(rect1.y + rect1.h > rect2.y && rect1.y + rect1.h < rect2.y + rect2.h)))
+	if (rect1.x + rect1.w > rect2.x + rect2.w)
 	{
-		int2 center = { rect1.x + rect1.w / 2 , rect2.x + rect2.w / 2 };
-		
-		for (int i = 0; i < m_balls.size(); i++)
-		{
-			m_balls[i].collisionX({abs(center.y - center.x), (rect2.w / 2)});
-		}
-		
-		rect1.x = rect2.x - rect1.w;
+		m_balls[index].collisionX();
+		rect1.x = rect2.x + rect2.w - rect1.w;
 	}
 }

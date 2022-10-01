@@ -1,6 +1,6 @@
 Path: exitBtn.bmp
 
-Start_Rect: 1750 40 90 90
+Start_Rect: 1750 25 150 150
 
 Max_Increase: 15
 

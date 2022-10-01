@@ -27,6 +27,8 @@ void Ball::init()
 	stream.close();
 
 	m_ball.texture = loadTexture(GAME_FOLDER + img);
+
+	m_moveDown = true;
 }
 
 void Ball::update()
@@ -46,7 +48,11 @@ void Ball::update()
 		m_speed.x *= -1;
 	}
 	
-	m_ball.rect.x += m_speed.x;
+	if (!m_moveDown)
+	{
+		m_ball.rect.x += m_speed.x;
+	}
+
 	m_ball.rect.y += m_speed.y;
 }
 
@@ -55,16 +61,12 @@ void Ball::draw()
 	drawObject(m_ball);
 }
 
-void Ball::collisionX(int2 percent)
+void Ball::collisionX()
 {
-	//m_speed.x *= -1;
-	m_speed.y *= -1;
-	//m_speed.y = m_speed.y * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
+	m_speed.x *= -1.0f;
 }
 
-void Ball::collisionY(int2 percent)
+void Ball::collisionY()
 {
-	//m_speed.y *= -1;
-	m_speed.x *= -1;
-	//m_speed.x = m_speed.x * (percent.y * 0.75 + percent.x * 0.25) / percent.y;
+	m_speed.y *= -1.0f;
 }

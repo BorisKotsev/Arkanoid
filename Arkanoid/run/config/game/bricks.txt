@@ -1,7 +1,7 @@
-Rect: 70 50 100 50
+Rect: 75 50 100 50
 
 Img: brick
 
-Offset: 100 50
+Offset: 105 55
 
-Hp: 5
+Hp: 1

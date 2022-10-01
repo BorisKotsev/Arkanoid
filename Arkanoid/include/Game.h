@@ -4,7 +4,6 @@
 
 #include "State.h"
 #include "Board.h"
-#include "ConfigManager.h"
 
 class Game : public State
 {

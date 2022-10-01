@@ -21,5 +21,5 @@ private:
 	
 	Button m_exitBtn;
 
-	DrawableForMenu m_playAgain;
+	Drawable m_playAgain;
 };

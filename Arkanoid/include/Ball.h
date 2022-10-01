@@ -16,12 +16,14 @@ public:
 	void update();
 	void draw();
 
-	void collisionX(int2 percent);
-	void collisionY(int2 percent);
+	void collisionX();
+	void collisionY();
 		
 	Drawable m_ball;
 
 	float2 m_direction;
 
 	int m_dmg;
+
+	bool m_moveDown;
 };
