@@ -4,6 +4,7 @@
 
 #include <SDL_TTF.h>
 
+#include "Writer.h"
 #include "Engine.h"
 
 using namespace std;
@@ -23,6 +24,8 @@ public:
 	
 	static int m_SCREEN_WIDTH;
 	static int m_SCREEN_HEIGHT;
+
+	Writer m_writer;
 
 	void init();
 	void update();

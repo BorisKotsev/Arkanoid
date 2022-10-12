@@ -17,22 +17,19 @@ void WinScreen::init()
 {
 	fstream stream;
 
-	string tmp, background, exitBtnPath, playAgain, playAgainGlow;
+	string tmp, background, exitBtnPath, playAgainBtnPath;
 
 	stream.open(CONFIG_FOLDER + WIN_SCREEN_FOLDER + "winScreen.txt");
 
 	stream >> tmp >> background;
 	stream >> tmp >> exitBtnPath;
-	stream >> tmp >> playAgain >> playAgainGlow;
-	stream >> tmp >> m_playAgain.rect.x >> m_playAgain.rect.y >> m_playAgain.rect.w >> m_playAgain.rect.h;
-	
+	stream >> tmp >> playAgainBtnPath;
+
 	stream.close();
 
 	m_background = loadTexture(WIN_SCREEN_FOLDER + background);
 
-	m_playAgain.texture = loadTexture(WIN_SCREEN_FOLDER + playAgain);
-	//m_playAgain.glowTexture = loadTexture(WIN_SCREEN_FOLDER + playAgainGlow);
-
+	m_playAgainBtn.init(playAgainBtnPath, MENU_FOLDER);
 	m_exitBtn.init(exitBtnPath, MENU_FOLDER);
 }
 
@@ -42,28 +39,31 @@ void WinScreen::run()
 
 	m_exitBtn.update();
 	m_exitBtn.draw();
-	
-	if (isMouseInRect(m_playAgain.rect))
-	{
-		//SDL_RenderCopy(world.m_presenter.m_main_renderer, m_playAgain.glowTexture, NULL, &m_playAgain.rect);
 
-		if (mouseIsPressed())
-		{			
-			world.m_stateManager.changeGameState(GAME_STATE::MENU);
+	m_playAgainBtn.update();
+	m_playAgainBtn.draw();
 
-			return;
-		}
-	}
-	else
-	{
-		SDL_RenderCopy(world.m_presenter.m_main_renderer, m_playAgain.texture, NULL, &m_playAgain.rect);
-	}
+	auto score = getText(to_string(world.m_stateManager.m_game->m_board.m_brick.m_counter),
+		FONT::CINZEL, COLOR::LIGHT, 128);
+
+	m_score.texture = score.second;
+
+	m_score.rect = { 1130, 226, score.first.x, score.first.y };
+
+	drawObject(m_score);
 	
 	if (mouseIsPressed())
 	{
 		if (isMouseInRect(m_exitBtn.getRect()))
 		{
 			world.m_stateManager.changeGameState(GAME_STATE::NONE);
+
+			return;
+		}
+
+		if (isMouseInRect(m_playAgainBtn.getRect()))
+		{
+			world.m_stateManager.changeGameState(GAME_STATE::MENU);
 
 			return;
 		}

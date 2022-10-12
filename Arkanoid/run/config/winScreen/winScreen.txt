@@ -2,6 +2,4 @@ Backgorund: background.bmp
 
 ExitBtnPath: exitBtn.txt
 
-PlayImg: Play.bmp Play2.bmp
-
-PlayRect: 224 600 183 94
+PlayBtnPath: playAgainBtn.txt

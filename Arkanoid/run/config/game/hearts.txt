@@ -3,5 +3,3 @@ HeartRect: 0 987 89 89
 HeartsImg: heart.bmp deadHeart.bmp
 
 Offset: 70
-
-Lives: 3

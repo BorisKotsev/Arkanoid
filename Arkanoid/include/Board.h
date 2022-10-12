@@ -18,6 +18,8 @@ public:
 
 	int m_lives;
 
+	Brick m_brick;
+
 	vector<Drawable> m_hearts;
 	
 	void load();
@@ -32,8 +34,6 @@ public:
 private:
 	SDL_Texture* m_background;
 	SDL_Texture* m_deadTexture;
-
-	Brick m_brick;
 
 	vector<Ball> m_balls;
 

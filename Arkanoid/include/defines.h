@@ -38,6 +38,7 @@ static string WIN_SCREEN_FOLDER = "winScreen\\";
 static string GAME_FOLDER = "game\\";
 static string BRICKS_FOLDER = "bricks\\";
 static string BOOSTS_FOLDER = "boosts\\";
+static string FONT_FOLDER = "ttf\\";
 
 struct int2
 {
@@ -213,5 +214,26 @@ struct BrickData : Drawable
 enum class SOUND
 {
     NONE = 0,
-    BACKGROUND = 1
+    BACKGROUND = 1,
+    DEAD = 2,
+    BUFF = 3,
+    NURF = 4,
+    WIN = 5,
+    LOSE = 6,
+    CRACK = 7,
+    BOUNCE = 8,
+    SPAWN = 9
+};
+
+enum class FONT
+{
+    NONE = 0,
+    CINZEL = 1
+};
+
+enum class COLOR
+{
+    NONE = 0,
+    LIGHT = 1,
+    DARK = 2
 };

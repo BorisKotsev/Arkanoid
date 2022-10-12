@@ -66,9 +66,10 @@ void Board::loadHearts()
 	stream >> tmp >> _heart.rect.x >> _heart.rect.y >> _heart.rect.w >> _heart.rect.h;
 	stream >> tmp >> heartImg >> brokenHeartImg;
 	stream >> tmp >> m_offset;
-	stream >> tmp >> m_lives;
 
 	stream.close();
+
+	m_lives = 3;
 
 	_heart.texture = loadTexture(GAME_FOLDER + heartImg);
 
@@ -112,6 +113,8 @@ void Board::update()
 	{
 		if (m_balls[i].m_ball.rect.y > Presenter::m_SCREEN_HEIGHT)
 		{
+			world.m_soundManager.playSound(SOUND::DEAD);
+
 			m_balls.erase(m_balls.begin() + i);
 		}
 	}
@@ -120,6 +123,8 @@ void Board::update()
 	{
 		if (collRectRect(m_balls[i].m_ball.rect, m_space.rect))
 		{
+			world.m_soundManager.playSound(SOUND::BOUNCE);
+
 			m_balls[i].m_moveDown = false;
 
 			collUpDown(m_balls[i].m_ball.rect, m_space.rect, i);
@@ -175,7 +180,7 @@ void Board::removeHeart()
 	
 	m_lives--;
 
-	//world.m_soundManager.playSound(SOUND::BOMB_EXPLOSION);
+	world.m_soundManager.playSound(SOUND::DEAD);
 
 	m_hearts[m_lives].texture = m_deadTexture;
 	
@@ -197,6 +202,8 @@ void Board::removeHeart()
 
 	if (m_lives == 0)
 	{
+		world.m_soundManager.playSound(SOUND::LOSE);
+
 		world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
 
 		return;
@@ -251,10 +258,12 @@ void Board::updateDrops()
 		{
 			if (m_allDrops[i].m_type == "BigBall")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+				
 				m_allDrops.erase(m_allDrops.begin() + i);
 				
 				int randBall = rand() % m_balls.size();
-				
+
 				m_balls[randBall].m_ball.rect.w += 20;
 				m_balls[randBall].m_ball.rect.h += 20;
 
@@ -262,6 +271,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "Reverse")
 			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				SDL_Scancode _tmp = m_direction.first;
@@ -273,6 +284,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "BiggerSpace")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				m_space.rect.w += 30;
@@ -281,6 +294,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SmallerSpace")
 			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				m_space.rect.w -= 30;
@@ -294,6 +309,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "AddBall")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				Ball _ball;
@@ -321,6 +338,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "AddLive")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				addHeart();
@@ -329,6 +348,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SpeedIncreaseBall")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				int randBall = rand() % m_balls.size();
@@ -340,12 +361,14 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SpeedDecreaseBall")
 			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				int randBall = rand() % m_balls.size();
 				
-				m_balls[randBall].m_speed.x -= 3;
-				m_balls[randBall].m_speed.y -= 3;
+				m_balls[randBall].m_speed.x -= 2;
+				m_balls[randBall].m_speed.y -= 2;
 
 				if (m_balls[randBall].m_speed.x <= 0)
 				{
@@ -361,6 +384,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "MegaBall")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				int randBall = rand() % m_balls.size();
@@ -371,6 +396,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SpeedIncreaseSpace")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				m_speed += 2;
@@ -379,6 +406,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SpeedDecreaseSpace")
 			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				m_speed -= 2;
@@ -392,6 +421,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "MultiplyBalls")
 			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				int _size = m_balls.size();
@@ -424,6 +455,8 @@ void Board::updateDrops()
 			}
 			else if (m_allDrops[i].m_type == "SmallBall")
 			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
 				m_allDrops.erase(m_allDrops.begin() + i);
 
 				int randBall = rand() % m_balls.size();
@@ -460,6 +493,8 @@ void Board::updateBricks()
 			{
 				if (collRectRect(m_brick.m_allBricks[i][j].rect, m_balls[p].m_ball.rect))
 				{
+					world.m_soundManager.playSound(SOUND::BOUNCE);
+
 					collLeftRight(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect, p);
 					collUpDown(m_balls[p].m_ball.rect, m_brick.m_allBricks[i][j].rect, p);
 					
@@ -479,6 +514,8 @@ void Board::updateBricks()
 								goto label;
 							}*/
 							
+							world.m_soundManager.playSound(SOUND::SPAWN);
+
 							_drop.m_drop.rect.x = m_brick.m_allBricks[i][j].rect.x;
 							_drop.m_drop.rect.y = m_brick.m_allBricks[i][j].rect.y;
 
@@ -494,6 +531,8 @@ void Board::updateBricks()
 
 					if (m_brick.m_counter >= m_ROWS * m_COLS)
 					{
+						world.m_soundManager.playSound(SOUND::WIN);
+
 						world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
 
 						return;

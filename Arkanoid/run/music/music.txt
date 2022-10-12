@@ -1,5 +1,17 @@
 Background_Music: Background.mp3
 
-Slice: slice.wav
+DeadBall: DeadBall.mp3
 
-Bomb: bomb.wav
+Buff: Buff.mp3
+
+Nurf: Nurf.mp3
+
+Win: Win.mp3
+
+Lose: Lose.mp3
+
+Crack: Crack.mp3
+
+Bounce: Bounce.mp3
+
+Spawn: Spawn.mp3

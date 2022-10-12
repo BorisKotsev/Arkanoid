@@ -20,6 +20,7 @@ private:
 	SDL_Texture* m_background;
 	
 	Button m_exitBtn;
+	Button m_playAgainBtn;
 
-	Drawable m_playAgain;
+	Drawable m_score;
 };

@@ -36,6 +36,8 @@ void Presenter::init()
 
     loadSurface = nullptr;
     cursor = nullptr;
+
+    m_writer.init();
 }
 
 void Presenter::improveRenderer()
