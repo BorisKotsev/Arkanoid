@@ -6,7 +6,7 @@ Rect: 860 940 200 50
 
 Img: space.bmp
 
-Speed: 12
+Speed: 13
 
 Rect: 820 772 280 125
 

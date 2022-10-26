@@ -12,9 +12,9 @@ World::~World()
 
 void World::init()
 {
+	m_soundManager.init();
 	m_presenter.init();
 	m_stateManager.init(GAME_STATE::MENU);
-	m_soundManager.init();
 }
 
 void World::run()

@@ -50,45 +50,45 @@ void SoundManager::init()
 
 void SoundManager::playSound(SOUND sound)
 {
-	Mix_AllocateChannels(10);
+	Mix_AllocateChannels(15);
 
 	switch (sound)
 	{
 	case SOUND::BACKGROUND:
-		Mix_PlayChannel((int)SOUND::BACKGROUND, m_backgroundMusic, -1);
-		Mix_Volume((int)SOUND::BACKGROUND, 10);
+		Mix_PlayChannel(1, m_backgroundMusic, -1);
+		Mix_Volume(1, 10);
 		break;
 	case SOUND::DEAD:
-		Mix_PlayChannel((int)SOUND::DEAD, m_deadBall, 1);
-		Mix_Volume((int)SOUND::DEAD, 10);
+		Mix_PlayChannel(2, m_deadBall, 0);
+		Mix_Volume(2, 10);
 		break;
 	case SOUND::BUFF:
-		Mix_PlayChannel((int)SOUND::BUFF, m_buff, 1);
+		Mix_PlayChannel(3, m_buff, 0);
 		Mix_Volume(3, 10);
 		break;
 	case SOUND::NURF:
-		Mix_PlayChannel((int)SOUND::NURF, m_nurf, 1);
-		Mix_Volume((int)SOUND::NURF, 10);
+		Mix_PlayChannel(4, m_nurf, 0);
+		Mix_Volume(4, 10);
 		break;
 	case SOUND::WIN:
-		Mix_PlayChannel((int)SOUND::WIN, m_win, 1);
-		Mix_Volume((int)SOUND::WIN, 10);
+		Mix_PlayChannel(5, m_win, 0);
+		Mix_Volume(5, 10);
 		break;
 	case SOUND::LOSE:
-		Mix_PlayChannel((int)SOUND::LOSE, m_lose, 1);
-		Mix_Volume((int)SOUND::LOSE, 10);
+		Mix_PlayChannel(6, m_lose, 0);
+		Mix_Volume(6, 10);
 		break;
 	case SOUND::CRACK:
-		Mix_PlayChannel((int)SOUND::CRACK, m_crack, 1);
-		Mix_Volume((int)SOUND::CRACK, 10);
+		Mix_PlayChannel(7, m_crack, 0);
+		Mix_Volume(7, 10);
 		break;
 	case SOUND::BOUNCE:
-		Mix_PlayChannel((int)SOUND::BOUNCE, m_bounce, 1);
-		Mix_Volume((int)SOUND::BOUNCE, 10);
+		Mix_PlayChannel(8, m_bounce, 0);
+		Mix_Volume(8, 5);
 		break;
 	case SOUND::SPAWN:
-		Mix_PlayChannel((int)SOUND::SPAWN, m_spawn, 1);
-		Mix_Volume((int)SOUND::SPAWN, 10);
+		Mix_PlayChannel(9, m_spawn, 0);
+		Mix_Volume(9, 10);
 		break;
 	}
 }

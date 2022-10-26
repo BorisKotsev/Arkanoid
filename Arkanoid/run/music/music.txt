@@ -1,17 +1,17 @@
-Background_Music: Background.mp3
+Background_Music: Background.wav
 
-DeadBall: DeadBall.mp3
+DeadBall: DeadBall.wav
 
-Buff: Buff.mp3
+Buff: Buff.wav
 
-Nurf: Nurf.mp3
+Nurf: Nurf.wav
 
-Win: Win.mp3
+Win: Win.wav
 
-Lose: Lose.mp3
+Lose: Lose.wav
 
-Crack: Crack.mp3
+Crack: Crack.wav
 
-Bounce: Bounce.mp3
+Bounce: Bounce.wav
 
-Spawn: Spawn.mp3
+Spawn: Spawn.wav

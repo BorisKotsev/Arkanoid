@@ -7,7 +7,7 @@
 #include "Engine.h"
 #include "defines.h"
 
-const int m_ROWS = 8;
+const int m_ROWS = 9;
 const int m_COLS = 17;
 
 class Brick
@@ -22,4 +22,9 @@ public:
 	BrickData m_allBricks [m_ROWS][m_COLS];
 		
 	int m_counter = 0;
+
+private:
+	SDL_Texture* m_oneHp;
+	SDL_Texture* m_twoHp;
+	SDL_Texture* m_threeHp;
 };

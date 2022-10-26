@@ -15,18 +15,19 @@ void Ball::init()
 {
 	fstream stream;
 
-	string tmp, img;
+	string tmp, img, img2;
 
 	stream.open(CONFIG_FOLDER + GAME_FOLDER + "ball.txt");
 
 	stream >> tmp >> m_ball.rect.x >> m_ball.rect.y >> m_ball.rect.w >> m_ball.rect.h;
-	stream >> tmp >> img;
+	stream >> tmp >> img >> img2;
 	stream >> tmp >> m_speed.x >> m_speed.y;
 	stream >> tmp >> m_dmg;
 
 	stream.close();
 
 	m_ball.texture = loadTexture(GAME_FOLDER + img);
+	m_megaTxt = loadTexture(GAME_FOLDER + img2);
 
 	m_moveDown = true;
 }

@@ -1,5 +1,5 @@
 WH: 100 50
-Speed: 1
+Speed: 2
 
 Type: BigBall
 Img: bigBall.bmp

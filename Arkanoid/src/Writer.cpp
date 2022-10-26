@@ -64,8 +64,6 @@ void Writer::init()
 		m_cinzel.insert(pair<int, TTF_Font*>(i, m_font));
 	}
 
-	cout << m_font;
-
 	SDL_Color color;
 
 	color.a = Uint8(255);

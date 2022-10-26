@@ -188,7 +188,7 @@ void Board::removeHeart()
 	m_direction.second = (SDL_Scancode)dir.y; // Left
 
 	m_space.rect.w = 200;
-	m_speed = 10;
+	m_speed = 13;
 
 	Ball _ball;
 
@@ -264,8 +264,8 @@ void Board::updateDrops()
 				
 				int randBall = rand() % m_balls.size();
 
-				m_balls[randBall].m_ball.rect.w += 20;
-				m_balls[randBall].m_ball.rect.h += 20;
+				m_balls[randBall].m_ball.rect.w += 5;
+				m_balls[randBall].m_ball.rect.h += 5;
 
 				return;
 			}
@@ -317,20 +317,12 @@ void Board::updateDrops()
 
 				_ball.init();
 
-				_ball.m_ball.rect = m_balls[0].m_ball.rect;
+				_ball.m_ball.rect.x = m_balls[0].m_ball.rect.x;
+				_ball.m_ball.rect.y = m_balls[0].m_ball.rect.y;
 
 				_ball.m_moveDown = false;
 
-				int r = rand() % 11;
-
-				if (r < 6)
-				{
-					_ball.m_ball.rect.x -= r * 2;
-				}
-				else
-				{
-					_ball.m_ball.rect.y -= r * 2;
-				}
+				_ball.collisionY();
 
 				m_balls.push_back(_ball);
 
@@ -354,8 +346,8 @@ void Board::updateDrops()
 
 				int randBall = rand() % m_balls.size();
 				
-				m_balls[randBall].m_speed.x += 3;
-				m_balls[randBall].m_speed.y += 3;
+				m_balls[randBall].m_speed.x += 1;
+				m_balls[randBall].m_speed.y += 1;
 
 				return;
 			}
@@ -367,8 +359,8 @@ void Board::updateDrops()
 
 				int randBall = rand() % m_balls.size();
 				
-				m_balls[randBall].m_speed.x -= 2;
-				m_balls[randBall].m_speed.y -= 2;
+				m_balls[randBall].m_speed.x -= 1;
+				m_balls[randBall].m_speed.y -= 1;
 
 				if (m_balls[randBall].m_speed.x <= 0)
 				{
@@ -390,7 +382,9 @@ void Board::updateDrops()
 
 				int randBall = rand() % m_balls.size();
 				
-				m_balls[randBall].m_dmg += 3;
+				m_balls[randBall].m_ball.texture = m_balls[randBall].m_megaTxt;
+
+				m_balls[randBall].m_dmg ++;
 
 				return;
 			}
@@ -433,21 +427,13 @@ void Board::updateDrops()
 
 					_ball.init();
 
-					_ball.m_ball.rect = m_balls[0].m_ball.rect;
+					_ball.m_ball.rect.x = m_balls[0].m_ball.rect.x;
+					_ball.m_ball.rect.y = m_balls[0].m_ball.rect.y;
 
 					_ball.m_moveDown = false;
 
-					int r = rand() % 11;
+					_ball.collisionY();
 
-					if (r < 6)
-					{
-						_ball.m_ball.rect.x -= r * 2;
-					}
-					else
-					{
-						_ball.m_ball.rect.y -= r * 2;
-					}
-										 
 					m_balls.push_back(_ball);
 				}
 
@@ -461,8 +447,8 @@ void Board::updateDrops()
 
 				int randBall = rand() % m_balls.size();
 				
-				m_balls[randBall].m_ball.rect.w -= 20;
-				m_balls[randBall].m_ball.rect.h -= 20;
+				m_balls[randBall].m_ball.rect.w -= 5;
+				m_balls[randBall].m_ball.rect.h -= 5;
 
 				if (m_balls[randBall].m_ball.rect.w <= 20)
 				{
@@ -502,6 +488,8 @@ void Board::updateBricks()
 
 					if (m_brick.m_allBricks[i][j].m_hp <= 0)
 					{
+						world.m_soundManager.playSound(SOUND::CRACK);
+
 						int r = rand() % 4;
 
 						if (r == 1) 
@@ -509,7 +497,7 @@ void Board::updateBricks()
 							label: 
 							Dropable _drop = m_drops.createNew();
 
-							/*if (_drop.m_type != "AddBall")
+							/*if (_drop.m_type != "MegaBall")
 							{
 								goto label;
 							}*/

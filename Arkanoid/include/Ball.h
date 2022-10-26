@@ -21,6 +21,8 @@ public:
 		
 	Drawable m_ball;
 
+	SDL_Texture* m_megaTxt;
+
 	float2 m_direction;
 
 	int m_dmg;

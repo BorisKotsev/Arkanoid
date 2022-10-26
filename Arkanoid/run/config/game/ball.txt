@@ -1,7 +1,7 @@
 BallRect 945 700 30 30
 
-Img ball.bmp
-
+Img ball.bmp megaBall.bmp
+ 
 Speed: 7 7
 
 Dmg: 1
