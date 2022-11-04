@@ -15,7 +15,7 @@ void Dropable::initAll()
 {
 	srand(time(NULL));
 	
-	string tmp, img;
+	string tmp;
 	
 	fstream stream;
 
@@ -29,9 +29,8 @@ void Dropable::initAll()
 	while (!stream.eof())
 	{
 		stream >> tmp >> _drop.m_type;
-		stream >> tmp >> img;
 
-		_drop.m_drop.texture = loadTexture(BOOSTS_FOLDER + img);
+		_drop.m_drop.texture = loadTexture(BOOSTS_FOLDER + _drop.m_type + ".bmp");
 		
 		m_allDropables.push_back(_drop);
 	}

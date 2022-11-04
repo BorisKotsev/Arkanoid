@@ -34,7 +34,7 @@ void Ball::init()
 
 void Ball::update()
 {
-	if (m_ball.rect.x > Presenter::m_SCREEN_WIDTH - m_ball.rect.w)
+	if (m_ball.rect.x > Presenter::m_SCREEN_WIDTH - m_ball.rect.w + 2)
 	{
 		m_speed.x *= -1;
 	}

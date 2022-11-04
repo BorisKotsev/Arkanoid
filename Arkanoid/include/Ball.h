@@ -23,8 +23,6 @@ public:
 
 	SDL_Texture* m_megaTxt;
 
-	float2 m_direction;
-
 	int m_dmg;
 
 	bool m_moveDown;

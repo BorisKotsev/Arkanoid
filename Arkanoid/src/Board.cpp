@@ -40,6 +40,8 @@ void Board::load()
 
 	m_brick.init();
 
+	m_balls.clear();
+
 	Ball _ball;
 	
 	_ball.init();
@@ -51,6 +53,8 @@ void Board::load()
 	m_allDrops.clear();
 
 	loadHearts();
+
+	m_mouseCounter = 0;
 }
 
 void Board::loadHearts()
@@ -202,6 +206,8 @@ void Board::removeHeart()
 
 	if (m_lives == 0)
 	{
+		m_hearts.clear();
+
 		world.m_soundManager.playSound(SOUND::LOSE);
 
 		world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
@@ -458,6 +464,40 @@ void Board::updateDrops()
 
 				return;
 			}
+			else if (m_allDrops[i].m_type == "What")
+			{
+				world.m_soundManager.playSound(SOUND::NURF);
+
+				m_allDrops.erase(m_allDrops.begin() + i);
+
+				int randNum = rand() % 3;
+				int randBall = rand() % m_balls.size();
+
+				if (randNum == 0)
+				{
+					m_balls[randBall].collisionX();
+				}
+				else if(randNum == 1)
+				{
+					m_balls[randBall].collisionY();
+				}
+				else if(randNum == 2)
+				{
+					m_balls[randBall].m_moveDown = true;
+				}
+
+				return;
+			}
+			else if (m_allDrops[i].m_type == "MouseBuff")
+			{
+				world.m_soundManager.playSound(SOUND::BUFF);
+
+				m_allDrops.erase(m_allDrops.begin() + i);
+				
+				m_mouseCounter += 3;
+
+				return;
+			}
 		}
 
 		if (m_allDrops[i].m_drop.rect.y >= Presenter::m_SCREEN_HEIGHT)
@@ -477,6 +517,13 @@ void Board::updateBricks()
 		{
 			for (int j = 0; j < m_COLS; j++)
 			{
+				if (isMouseInRect(m_brick.m_allBricks[i][j].rect) && m_mouseCounter != 0)
+				{
+					removeBrick(i, j);
+					
+					m_mouseCounter--;
+				}
+
 				if (collRectRect(m_brick.m_allBricks[i][j].rect, m_balls[p].m_ball.rect))
 				{
 					world.m_soundManager.playSound(SOUND::BOUNCE);
@@ -488,46 +535,53 @@ void Board::updateBricks()
 
 					if (m_brick.m_allBricks[i][j].m_hp <= 0)
 					{
-						world.m_soundManager.playSound(SOUND::CRACK);
-
-						int r = rand() % 4;
-
-						if (r == 1) 
-						{
-							label: 
-							Dropable _drop = m_drops.createNew();
-
-							/*if (_drop.m_type != "MegaBall")
-							{
-								goto label;
-							}*/
-							
-							world.m_soundManager.playSound(SOUND::SPAWN);
-
-							_drop.m_drop.rect.x = m_brick.m_allBricks[i][j].rect.x;
-							_drop.m_drop.rect.y = m_brick.m_allBricks[i][j].rect.y;
-
-							m_allDrops.push_back(_drop);
-						}
-
-						SDL_DestroyTexture(m_brick.m_allBricks[i][j].texture);
-
-						m_brick.m_allBricks[i][j].rect = { 0, 0, 0, 0 };
-
-						m_brick.m_counter++;
-					}
-
-					if (m_brick.m_counter >= m_ROWS * m_COLS)
-					{
-						world.m_soundManager.playSound(SOUND::WIN);
-
-						world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
-
-						return;
+						removeBrick(i, j);
 					}
 				}
 			}
 		}
+	}
+}
+
+void Board::removeBrick(int i, int j)
+{
+	world.m_soundManager.playSound(SOUND::CRACK);
+
+	int r = rand() % 6;
+
+	if (r == 1)
+	{
+	label:
+		Dropable _drop = m_drops.createNew();
+
+		/*if (_drop.m_type != "MouseBuff")
+		{
+			goto label;
+		}*/
+
+		world.m_soundManager.playSound(SOUND::SPAWN);
+
+		_drop.m_drop.rect.x = m_brick.m_allBricks[i][j].rect.x;
+		_drop.m_drop.rect.y = m_brick.m_allBricks[i][j].rect.y;
+
+		m_allDrops.push_back(_drop);
+	}
+
+	m_brick.m_allBricks[i][j].m_hp = 0;
+
+	SDL_DestroyTexture(m_brick.m_allBricks[i][j].texture);
+
+	m_brick.m_allBricks[i][j].rect = { 0, 0, 0, 0 };
+
+	m_brick.m_counter++;
+
+	if (m_brick.m_counter >= m_ROWS * m_COLS)
+	{
+		world.m_soundManager.playSound(SOUND::WIN);
+
+		world.m_stateManager.changeGameState(GAME_STATE::WIN_SCREEN);
+
+		return;
 	}
 }
 
@@ -544,6 +598,7 @@ void Board::collUpDown(SDL_Rect rect1, SDL_Rect rect2, int index)
 	{
 		m_balls[index].collisionY();
 		rect1.y = rect2.y + rect2.h - rect1.h;
+		return;
 	}
 }
 
@@ -560,5 +615,6 @@ void Board::collLeftRight(SDL_Rect rect1, SDL_Rect rect2, int index)
 	{
 		m_balls[index].collisionX();
 		rect1.x = rect2.x + rect2.w - rect1.w;
+		return;
 	}
 }

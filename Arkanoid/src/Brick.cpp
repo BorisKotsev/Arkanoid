@@ -34,6 +34,8 @@ void Brick::init()
 
 	stream.close();
 
+	m_counter = 0;
+
 	int _tmp = _data.rect.x;
 
 	for (int i = 0; i < m_ROWS; i++)

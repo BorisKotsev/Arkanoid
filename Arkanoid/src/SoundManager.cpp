@@ -56,7 +56,7 @@ void SoundManager::playSound(SOUND sound)
 	{
 	case SOUND::BACKGROUND:
 		Mix_PlayChannel(1, m_backgroundMusic, -1);
-		Mix_Volume(1, 10);
+		Mix_Volume(1, 17);
 		break;
 	case SOUND::DEAD:
 		Mix_PlayChannel(2, m_deadBall, 0);
@@ -80,7 +80,7 @@ void SoundManager::playSound(SOUND sound)
 		break;
 	case SOUND::CRACK:
 		Mix_PlayChannel(7, m_crack, 0);
-		Mix_Volume(7, 10);
+		Mix_Volume(7, 5);
 		break;
 	case SOUND::BOUNCE:
 		Mix_PlayChannel(8, m_bounce, 0);
