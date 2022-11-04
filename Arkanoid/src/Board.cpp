@@ -52,6 +52,8 @@ void Board::load()
 
 	m_allDrops.clear();
 
+	m_hearts.clear();
+
 	loadHearts();
 
 	m_mouseCounter = 0;
