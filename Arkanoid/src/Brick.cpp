@@ -19,7 +19,7 @@ void Brick::init()
 	
 	fstream stream;
 
-	string tmp, img;
+	string tmp, img, stone;
 
 	BrickData _data;
 
@@ -31,25 +31,41 @@ void Brick::init()
 	stream >> tmp >> img;
 	stream >> tmp >> _offset.x >> _offset.y;
 	stream >> tmp >> _data.m_hp;
+	stream >> tmp >> stone;
 
 	stream.close();
+
+	m_stone = loadTexture(GAME_FOLDER + stone);
 
 	m_counter = 0;
 
 	int _tmp = _data.rect.x;
+
+	int _currHp = _data.m_hp;
 
 	for (int i = 0; i < m_ROWS; i++)
 	{
 		if (i % 3 == 0)
 		{
 			_data.m_hp--;
+			_currHp = _data.m_hp;
 		}
 
 		for (int j = 0; j < m_COLS; j++)
 		{			
 			_data.texture = loadTexture(GAME_FOLDER + img + ".bmp");
 
+			int r = rand() % 15;
+
+			if (r == 1)
+			{
+				_data.m_hp = INT_MAX;
+				_data.texture = m_stone;
+			}
+
 			m_allBricks[i][j] = _data;
+
+			_data.m_hp = _currHp;
 			
 			_data.rect.x += _offset.x;
 		}

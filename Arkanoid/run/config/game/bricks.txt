@@ -5,3 +5,5 @@ Img: brick
 Offset: 105 55
 
 Hp: 4
+
+Stone: stone.bmp

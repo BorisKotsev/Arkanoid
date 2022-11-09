@@ -27,4 +27,5 @@ private:
 	SDL_Texture* m_oneHp;
 	SDL_Texture* m_twoHp;
 	SDL_Texture* m_threeHp;
+	SDL_Texture* m_stone;
 };
